@@ -28,7 +28,7 @@ import { usePlayerStore } from '../src/store/usePlayerStore';
 import { useStatsStore } from '../src/store/useStatsStore';
 import { RECITERS } from '../src/constants/reciters';
 import { AmbientSelectorModal } from '../components/AmbientSelectorModal';
-import { GlassSurface } from '../../components/GlassSurface';
+import { GlassSurface } from '../components/GlassSurface';
 
 export default function PlayerScreen() {
   const router = useRouter();
