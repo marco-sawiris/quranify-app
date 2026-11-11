@@ -1,6 +1,6 @@
 # Quranify Web
 
-A standalone browser target built with Vite + React. The original Expo Android/iOS application remains in the repository and keeps its native entry point and Expo commands.
+A standalone browser target built with Vite + React. Its React 19 runtime and Liquid Glass package are isolated in `web/package.json`; the original Expo Android/iOS application keeps its root React 18 runtime and native commands.
 
 ## Run the Web app
 
@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Vite serves the Web app on port 5173. The root `index.html` loads `web/src/main.tsx`, making the repository root directly recognizable as a Vite app by browser-based build environments such as Google AI Studio.
+Vite serves the Web app on port 5173. The `predev` script installs the isolated Web runtime automatically. The root `index.html` loads `web/src/main.tsx`, making the repository root directly recognizable as a Vite app by browser-based build environments such as Google AI Studio. You can also run `npm run setup:web` explicitly.
 
 ## Production build
 
@@ -45,4 +45,4 @@ For Expo's own web preview, use `npm run web:expo`.
 
 ## Platform boundary
 
-`liquid-glass-react` is a React DOM package and is used only by the Web target. The Expo Android/iOS screens and audio engine remain separate and are not replaced by this implementation.
+`liquid-glass-react` requires React 19 in the published npm package. To avoid changing the Expo app's React 18 dependency, the Web runtime installs its own React 19 / React DOM 19 pair under `web/node_modules`. The Expo Android/iOS screens and audio engine remain separate and unchanged.
