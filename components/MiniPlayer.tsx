@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     bottom: 56, // Above standard tab bar
     left: 12,
     right: 12,
-    backgroundColor: 'rgba(13, 25, 48, 0.42)',
+    backgroundColor: Platform.select({ android: 'rgba(13, 25, 48, 0.42)', default: '#1E293B' }),
     borderRadius: 16,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
     borderWidth: 1,
-    borderColor: 'rgba(160, 205, 255, 0.2)',
+    borderColor: Platform.select({ android: 'rgba(160, 205, 255, 0.2)', default: '#334155' }),
   },
   progressBarBackground: {
     height: 3,
