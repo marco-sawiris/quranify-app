@@ -1,0 +1,13 @@
+{
+  "name": "quranify-web-runtime",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "liquid-glass-react": "1.1.1",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  }
+}
