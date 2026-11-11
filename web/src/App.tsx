@@ -38,6 +38,9 @@ export default function App() {
     s.englishName.toLowerCase().includes(query.trim().toLowerCase()) ||
     String(s.number) === query.trim()
   ), [query]);
+  const visibleSurahs = useMemo(() => section === 'favorites'
+    ? filteredSurahs.filter(s => favorites.includes(s.number))
+    : filteredSurahs, [section, filteredSurahs, favorites]);
 
   useEffect(() => { localStorage.setItem('quranify-favorites', JSON.stringify(favorites)); }, [favorites]);
   useEffect(() => {
@@ -136,8 +139,8 @@ export default function App() {
 
         {(section === 'quran' || section === 'favorites') && <section className="list-section">
           <div className="list-toolbar"><div><span className="eyebrow">{section === 'favorites' ? 'ما احتفظت به' : 'كلام الله'}</span><h2>{section === 'favorites' ? 'السور المحفوظة' : 'تصفّح سور القرآن'}</h2></div><label className="search-box"><Search size={17}/><input value={query} onChange={e => setQuery(e.target.value)} placeholder="ابحث باسم السورة أو رقمها..."/>{query && <button onClick={() => setQuery('')}><X size={15}/></button>}</label></div>
-          <div className="surah-grid">{(section === 'favorites' ? filteredSurahs.filter(s => favorites.includes(s.number)) : filteredSurahs).map(item => <LiquidGlass key={item.number} displacementScale={24} blurAmount={0.08} saturation={120} aberrationIntensity={0.5} cornerRadius={18} padding="0" className="surah-item"><button className="surah-main" onClick={() => selectSurah(item)}><span className="surah-number">{String(item.number).padStart(2,'0')}</span><span className="surah-info"><b>سورة {item.name}</b><small>{item.revelationType} · {item.numberOfAyahs} آيات</small></span><Play size={16} className="surah-play"/></button><button className={'fav-toggle ' + (favorites.includes(item.number) ? 'is-fav' : '')} onClick={() => toggleFavorite(item.number)}><Heart size={17} fill={favorites.includes(item.number) ? 'currentColor' : 'none'}/></button></LiquidGlass>)}</div>
-          {filteredSurahs.length === 0 && <div className="empty-state">مفيش نتائج مطابقة للبحث.</div>}
+          <div className="surah-grid">{visibleSurahs.map(item => <LiquidGlass key={item.number} displacementScale={24} blurAmount={0.08} saturation={120} aberrationIntensity={0.5} cornerRadius={18} padding="0" className="surah-item"><button className="surah-main" onClick={() => selectSurah(item)}><span className="surah-number">{String(item.number).padStart(2,'0')}</span><span className="surah-info"><b>سورة {item.name}</b><small>{item.revelationType} · {item.numberOfAyahs} آيات</small></span><Play size={16} className="surah-play"/></button><button className={'fav-toggle ' + (favorites.includes(item.number) ? 'is-fav' : '')} onClick={() => toggleFavorite(item.number)}><Heart size={17} fill={favorites.includes(item.number) ? 'currentColor' : 'none'}/></button></LiquidGlass>)}</div>
+          {visibleSurahs.length === 0 && <div className="empty-state">{section === 'favorites' && !query ? 'لسه مفيش سور في المفضلة.' : 'مفيش نتائج مطابقة للبحث.'}</div>}
         </section>}
 
         {section === 'reciters' && <section className="list-section"><div className="section-heading"><div><span className="eyebrow">أصوات قرآنية</span><h2>اختر القارئ المفضل</h2></div></div><div className="reciter-grid">{RECITERS.map((r, i) => <LiquidGlass key={r.id} displacementScale={30} blurAmount={0.1} saturation={130} aberrationIntensity={0.8} cornerRadius={20} padding="18px" className="reciter-card"><div className="reciter-avatar"><Headphones size={23}/></div><b>{r.name}</b><span>رواية حفص عن عاصم</span><button onClick={() => { setReciter(r); void playSurah(surah, r); }}> <CirclePlay size={16}/> استمع الآن</button></LiquidGlass>)}</div></section>}
