@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
+import { BlurView } from 'expo-blur';
 import { Home, Search, Users, ListMusic, BarChart2, Settings } from 'lucide-react-native';
 
 export default function TabsLayout() {
@@ -7,9 +8,10 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        tabBarBackground: () => <BlurView tint="dark" intensity={42} experimentalBlurMethod="dimezisBlurView" style={{ flex: 1 }} />,
         tabBarStyle: {
-          backgroundColor: '#0F172A',
-          borderTopColor: '#1E293B',
+          backgroundColor: 'rgba(10, 15, 29, 0.48)',
+          borderTopColor: 'rgba(160, 205, 255, 0.18)',
           borderTopWidth: 1,
           height: 60,
           paddingBottom: 8,
