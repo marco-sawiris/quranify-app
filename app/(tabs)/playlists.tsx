@@ -12,6 +12,7 @@ import { Play, BookOpen, Clock, ListMusic } from 'lucide-react-native';
 import { PLAYLISTS, AUDIO_STORIES } from '../../src/constants/playlists';
 import { QuranService } from '../../src/services/quranService';
 import { usePlayerStore } from '../../src/store/usePlayerStore';
+import { GlassSurface } from '../../components/GlassSurface';
 
 export default function PlaylistsScreen() {
   const [activeTab, setActiveTab] = useState<'playlists' | 'stories'>('playlists');
