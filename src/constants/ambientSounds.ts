@@ -1,0 +1,60 @@
+import { AmbientSound } from '../types';
+
+export const AMBIENT_SOUNDS: AmbientSound[] = [
+  {
+    id: 'rain',
+    title: 'Calm Rain',
+    arabicTitle: 'مطر هادئ',
+    icon: 'cloud-rain',
+    file: require('../../assets/audio/calm_rain.mp3'),
+    defaultVolume: 0.5,
+  },
+  {
+    id: 'bonfire',
+    title: 'Bonfire',
+    arabicTitle: 'حطب ونار',
+    icon: 'flame',
+    file: require('../../assets/audio/calm_bonfire.mp3'),
+    defaultVolume: 0.4,
+  },
+  {
+    id: 'river',
+    title: 'River Stream',
+    arabicTitle: 'خرير النهر',
+    icon: 'waves',
+    file: require('../../assets/audio/calm_river.mp3'),
+    defaultVolume: 0.5,
+  },
+  {
+    id: 'birds',
+    title: 'Morning Birds',
+    arabicTitle: 'طيور الصباح',
+    icon: 'sun',
+    file: require('../../assets/audio/morning_birds.mp3'),
+    defaultVolume: 0.35,
+  },
+  {
+    id: 'wind',
+    title: 'Light Wind',
+    arabicTitle: 'نسيم الرياح',
+    icon: 'wind',
+    file: require('../../assets/audio/light_wind.mp3'),
+    defaultVolume: 0.45,
+  },
+  {
+    id: 'waves',
+    title: 'Ocean Waves',
+    arabicTitle: 'أمواج البحر',
+    icon: 'droplet',
+    file: require('../../assets/audio/wave_effect.mp3'),
+    defaultVolume: 0.5,
+  },
+  {
+    id: 'cat',
+    title: 'Cat Purring',
+    arabicTitle: 'خرخرة قطة',
+    icon: 'heart',
+    file: require('../../assets/audio/cat_puring.mp3'),
+    defaultVolume: 0.3,
+  },
+];

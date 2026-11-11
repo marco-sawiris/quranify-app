@@ -1,0 +1,83 @@
+import { Playlist, AudioStory } from '../types';
+
+export const PLAYLISTS: Playlist[] = [
+  {
+    id: 'calm_sleep',
+    title: 'Peace & Sleep',
+    arabicTitle: 'سكينة ونوم هادئ',
+    description: 'تلاوات خاشعة تهدئ النفس وتساعد على الاسترخاء والنوم',
+    image: 'https://images.unsplash.com/photo-1511295742362-92c96b124e52?auto=format&fit=crop&w=600&q=80',
+    surahIds: [67, 32, 56, 36],
+    color: '#1E1B4B',
+  },
+  {
+    id: 'morning_blessing',
+    title: 'Morning Light',
+    arabicTitle: 'بركة الصباح والانشراح',
+    description: 'آيات الاستفتاح وبداية يوم مبارك مليء بالسكينة والنشاط',
+    image: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=600&q=80',
+    surahIds: [55, 93, 94, 1],
+    color: '#064E3B',
+  },
+  {
+    id: 'focus_work',
+    title: 'Deep Focus',
+    arabicTitle: 'تركيز وتدبر في العمل',
+    description: 'تلاوات هادئة تدعم التركيز والإنتاجية مع أصوات الطبيعة',
+    image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=600&q=80',
+    surahIds: [18, 12, 20],
+    color: '#1E293B',
+  },
+  {
+    id: 'protection_ruqyah',
+    title: 'Ruqyah & Protection',
+    arabicTitle: 'الرقية الشرعية والتحصين',
+    description: 'آيات التحصين والحفظ وسور المعوذات',
+    image: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=600&q=80',
+    surahIds: [2, 112, 113, 114],
+    color: '#312E81',
+  },
+];
+
+export const AUDIO_STORIES: AudioStory[] = [
+  {
+    id: 'prophet_yusuf',
+    title: 'The Story of Prophet Yusuf',
+    arabicTitle: 'أحسن القصص: قصة يوسف عليه السلام',
+    category: 'قصص الأنبياء',
+    duration: '42 دقيقة',
+    narrator: 'الشيخ نبيل العوضي',
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80',
+    description: 'رحلة الصبر والتمكين، من غياهب الجب إلى خزائن الأرض وسجدة الإخوة.',
+  },
+  {
+    id: 'prophet_musa',
+    title: 'Moses & Pharaoh',
+    arabicTitle: 'موسى عليه السلام وفرعون',
+    category: 'قصص القرآن',
+    duration: '55 دقيقة',
+    narrator: 'الشيخ عائض القرني',
+    image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80',
+    description: 'مواجهة الطغيان، ومعجزة فلق البحر وتجلي الحق على جبل الطور.',
+  },
+  {
+    id: 'companions_cave',
+    title: 'The Companions of the Cave',
+    arabicTitle: 'أصحاب الكهف ورقدة القرون',
+    category: 'عبر القرآن',
+    duration: '28 دقيقة',
+    narrator: 'د. طارق السويدان',
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+    description: 'فتية آمنوا بربهم فزادهم هدى، وثبات العقيدة في وجه الفتن.',
+  },
+  {
+    id: 'prophet_ibrahim',
+    title: 'Abraham: Father of Prophets',
+    arabicTitle: 'إبراهيم خليل الرحمن عليه السلام',
+    category: 'سير الأنبياء',
+    duration: '48 دقيقة',
+    narrator: 'الشيخ بدر المشاري',
+    image: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=600&q=80',
+    description: 'البحث عن الحقيقة، تحطيم الأصنام، وابتلاء الذبح وبناء البيت العتيق.',
+  },
+];
