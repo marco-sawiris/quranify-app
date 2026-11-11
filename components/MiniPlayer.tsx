@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { Play, Pause, Disc, CloudRain } from 'lucide-react-native';
 import { usePlayerStore } from '../src/store/usePlayerStore';
 import { BlurView } from 'expo-blur';
+import { Platform } from 'react-native';
 
 export const MiniPlayer: React.FC = () => {
   const router = useRouter();
@@ -24,7 +25,7 @@ export const MiniPlayer: React.FC = () => {
       onPress={() => router.push('/player')}
       style={styles.container}
     >
-      <BlurView tint="dark" intensity={48} experimentalBlurMethod="dimezisBlurView" style={StyleSheet.absoluteFillObject} />
+      {Platform.OS === 'android' && <BlurView tint="dark" intensity={48} experimentalBlurMethod="dimezisBlurView" style={StyleSheet.absoluteFillObject} />}
       {/* Progress line */}
       <View style={styles.progressBarBackground}>
         <View style={[styles.progressBarFill, { width: `${progress * 100}%` }]} />
