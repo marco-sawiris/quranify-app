@@ -1,41 +1,48 @@
 # Quranify Web
 
-A standalone browser build of Quranify. The original Expo application remains at the repository root and is not modified by this web implementation.
+A standalone browser target built with Vite + React. The original Expo Android/iOS application remains in the repository and keeps its native entry point and Expo commands.
 
-## Run locally
+## Run the Web app
 
 From the repository root:
 
 ```bash
-cd web
 npm install
 npm run dev
 ```
 
-Vite starts on port 5173.
+Vite serves the Web app on port 5173. The root `index.html` loads `web/src/main.tsx`, making the repository root directly recognizable as a Vite app by browser-based build environments such as Google AI Studio.
 
 ## Production build
 
 ```bash
-cd web
-npm install
 npm run build
 npm run preview
 ```
 
-The production output is generated in `web/dist`.
+The production output is generated in `dist/`.
+
+## Native Android/iOS
+
+The original Expo workflows remain available:
+
+```bash
+npm start
+npm run android
+npm run ios
+```
+
+For Expo's own web preview, use `npm run web:expo`.
 
 ## Design and behavior
 
 - Arabic RTL layout with responsive desktop and mobile navigation.
 - Dark near-black background with subtle blue ambient gradients and reduced-motion support.
-- Liquid Glass surfaces powered by `liquid-glass-react`; use a conventional translucent/blurred fallback in browsers that do not support displacement maps (notably Safari and Firefox).
-- Surah metadata is imported from the existing Expo application's Quran service.
+- Selective Liquid Glass surfaces powered by `liquid-glass-react`; use a conventional translucent/blurred fallback in browsers that do not support displacement maps (notably Safari and Firefox).
+- Surah metadata is imported from the existing Quran service.
 - Recitation uses the existing MP3Quran audio server URLs through the browser's native audio element.
 - Favorites are stored in browser localStorage.
 
-## Important separation
+## Platform boundary
 
-This folder is the Web target. It is intentionally isolated from the Expo Android/iOS runtime because `liquid-glass-react` is a React DOM library, not a React Native component. The mobile app continues to use its original Expo dependencies and screens.
-
-Google AI Studio should be pointed at this Web app's `web` directory (Vite entry: `web/index.html`) when configuring a browser-based project.
+`liquid-glass-react` is a React DOM package and is used only by the Web target. The Expo Android/iOS screens and audio engine remain separate and are not replaced by this implementation.
