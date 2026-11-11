@@ -11,7 +11,7 @@ export default function TabsLayout() {
         headerShown: false,
         tabBarBackground: () => Platform.OS === 'android' ? <BlurView tint="dark" intensity={42} experimentalBlurMethod="dimezisBlurView" style={{ flex: 1 }} /> : undefined,
         tabBarStyle: {
-          backgroundColor: 'rgba(10, 15, 29, 0.48)',
+          backgroundColor: Platform.select({ android: 'rgba(10, 15, 29, 0.48)', default: '#0F172A' }),
           borderTopColor: 'rgba(160, 205, 255, 0.18)',
           borderTopWidth: 1,
           height: 60,
