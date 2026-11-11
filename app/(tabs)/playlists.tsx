@@ -103,7 +103,7 @@ export default function PlaylistsScreen() {
         ) : (
           <View style={styles.storiesContainer}>
             {AUDIO_STORIES.map((story) => (
-              <View key={story.id} style={styles.storyCard}>
+              <GlassSurface key={story.id} style={styles.storyCard}>
                 <Image source={{ uri: story.image }} style={styles.storyImage} />
                 <View style={styles.storyInfo}>
                   <View style={styles.storyCategoryBadge}>
@@ -127,7 +127,7 @@ export default function PlaylistsScreen() {
                     </TouchableOpacity>
                   </View>
                 </View>
-              </View>
+              </GlassSurface>
             ))}
           </View>
         )}
