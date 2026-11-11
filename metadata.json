@@ -1,0 +1,6 @@
+{
+  "name": "Quranify - تطبيق القرآن الكريم والصوتيات الذكي",
+  "description": "تطبيق إسلامي حديث ومتكامل للقرآن الكريم مع محرك صوتيات مزدوج وتلاوات كبار القراء",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

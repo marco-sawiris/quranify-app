@@ -1,4 +1,4 @@
-import surahNamesAr from '../../assets/data/surah_names_ar.json';
+import { SurahData } from '../types';
 
 export interface SurahMeta {
   number: number;
@@ -148,5 +148,17 @@ export class QuranService {
   static getSurahAudioUrl(audioServer: string, surahNumber: number): string {
     const formattedNum = surahNumber.toString().padStart(3, '0');
     return `${audioServer}${formattedNum}.mp3`;
+  }
+
+  static async getSurahContent(surahNumber: number): Promise<SurahData | null> {
+    try {
+      const res = await fetch(`/assets/data/surah/surah_${surahNumber}.json`);
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (e) {
+      console.warn('Failed to load local surah', e);
+    }
+    return null;
   }
 }

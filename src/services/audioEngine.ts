@@ -1,133 +1,172 @@
-import { Audio, AVPlaybackStatus } from 'expo-av';
 import { AmbientSound } from '../types';
 
-class AudioEngine {
-  private recitationSound: Audio.Sound | null = null;
-  private ambientSound: Audio.Sound | null = null;
-  private isInitialized = false;
+export interface PlaybackStatus {
+  isLoaded: boolean;
+  isPlaying: boolean;
+  positionMillis: number;
+  durationMillis: number;
+  didJustFinish: boolean;
+  isBuffering: boolean;
+}
 
-  async init() {
-    if (this.isInitialized) return;
-    try {
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: false,
-        staysActiveInBackground: true,
-        playsInSilentModeIOS: true,
-        shouldDuckAndroid: true,
-        playThroughEarpieceAndroid: false,
-      });
-      this.isInitialized = true;
-    } catch (e) {
-      console.warn('AudioEngine init error', e);
-    }
+class AudioEngine {
+  private recitationAudio: HTMLAudioElement | null = null;
+  private ambientAudio: HTMLAudioElement | null = null;
+  private onStatusUpdateCallback: ((status: PlaybackStatus) => void) | null = null;
+  private statusInterval: number | null = null;
+
+  private emitStatus(didJustFinish = false) {
+    if (!this.onStatusUpdateCallback || !this.recitationAudio) return;
+    this.onStatusUpdateCallback({
+      isLoaded: true,
+      isPlaying: !this.recitationAudio.paused,
+      positionMillis: Math.floor(this.recitationAudio.currentTime * 1000),
+      durationMillis: Math.floor((this.recitationAudio.duration || 0) * 1000),
+      didJustFinish,
+      isBuffering: this.recitationAudio.readyState < 3 && !this.recitationAudio.paused,
+    });
   }
 
   // --- Recitation Audio Controls ---
   async loadAndPlayRecitation(
     url: string,
-    onStatusUpdate: (status: AVPlaybackStatus) => void,
+    onStatusUpdate: (status: PlaybackStatus) => void,
     initialVolume = 1.0
   ) {
-    await this.init();
+    this.onStatusUpdateCallback = onStatusUpdate;
 
-    if (this.recitationSound) {
-      try {
-        await this.recitationSound.stopAsync();
-        await this.recitationSound.unloadAsync();
-      } catch (e) {
-        // ignore
+    if (this.recitationAudio) {
+      this.recitationAudio.pause();
+      this.recitationAudio.src = '';
+      if (this.statusInterval) {
+        clearInterval(this.statusInterval);
+        this.statusInterval = null;
       }
-      this.recitationSound = null;
     }
+
+    const audio = new Audio();
+    audio.src = url;
+    audio.volume = Math.max(0, Math.min(1, initialVolume));
+    audio.preload = 'auto';
+    this.recitationAudio = audio;
+
+    audio.addEventListener('timeupdate', () => this.emitStatus(false));
+    audio.addEventListener('play', () => this.emitStatus(false));
+    audio.addEventListener('pause', () => this.emitStatus(false));
+    audio.addEventListener('ended', () => this.emitStatus(true));
+    audio.addEventListener('waiting', () => this.emitStatus(false));
+    audio.addEventListener('playing', () => this.emitStatus(false));
+    audio.addEventListener('error', (e) => {
+      console.warn('Audio playback error', e);
+      this.emitStatus(false);
+    });
 
     try {
-      const { sound } = await Audio.Sound.createAsync(
-        { uri: url },
-        { shouldPlay: true, volume: initialVolume },
-        onStatusUpdate
-      );
-      this.recitationSound = sound;
-      return sound;
-    } catch (error) {
-      console.error('Failed to load recitation', error);
-      throw error;
+      await audio.play();
+    } catch (err) {
+      console.warn('Autoplay may be waiting for user interaction', err);
     }
+
+    if (this.statusInterval) clearInterval(this.statusInterval);
+    this.statusInterval = window.setInterval(() => {
+      if (this.recitationAudio && !this.recitationAudio.paused) {
+        this.emitStatus(false);
+      }
+    }, 500);
+
+    this.emitStatus(false);
+    return audio;
   }
 
   async playRecitation() {
-    if (this.recitationSound) {
-      await this.recitationSound.playAsync();
+    if (this.recitationAudio) {
+      try {
+        await this.recitationAudio.play();
+      } catch (err) {
+        console.warn('Play error:', err);
+      }
     }
   }
 
   async pauseRecitation() {
-    if (this.recitationSound) {
-      await this.recitationSound.pauseAsync();
+    if (this.recitationAudio) {
+      this.recitationAudio.pause();
+    }
+  }
+
+  async stopRecitation() {
+    if (this.recitationAudio) {
+      this.recitationAudio.pause();
+      this.recitationAudio.currentTime = 0;
     }
   }
 
   async seekRecitation(positionMillis: number) {
-    if (this.recitationSound) {
-      await this.recitationSound.setPositionAsync(positionMillis);
+    if (this.recitationAudio) {
+      this.recitationAudio.currentTime = positionMillis / 1000;
+      this.emitStatus(false);
     }
   }
 
   async setRecitationVolume(volume: number) {
-    if (this.recitationSound) {
-      await this.recitationSound.setVolumeAsync(Math.max(0, Math.min(1, volume)));
+    if (this.recitationAudio) {
+      this.recitationAudio.volume = Math.max(0, Math.min(1, volume));
     }
   }
 
-  // --- Ambient Background Sound Controls ---
-  async playAmbient(ambient: AmbientSound, volume = 0.5) {
-    await this.init();
-
-    if (this.ambientSound) {
-      try {
-        await this.ambientSound.stopAsync();
-        await this.ambientSound.unloadAsync();
-      } catch (e) {
-        // ignore
-      }
-      this.ambientSound = null;
+  // --- Ambient Dual Audio Engine ---
+  async loadAndPlayAmbient(ambient: AmbientSound, initialVolume = 0.5) {
+    if (this.ambientAudio) {
+      this.ambientAudio.pause();
+      this.ambientAudio.src = '';
     }
 
     try {
-      const { sound } = await Audio.Sound.createAsync(
-        ambient.file,
-        {
-          isLooping: true,
-          shouldPlay: true,
-          volume: Math.max(0, Math.min(1, volume)),
-        }
-      );
-      this.ambientSound = sound;
+      const audio = new Audio();
+      audio.src = typeof ambient.file === 'string' ? ambient.file : '';
+      audio.loop = true;
+      audio.volume = Math.max(0, Math.min(1, initialVolume));
+      audio.preload = 'auto';
+      this.ambientAudio = audio;
+
+      await audio.play();
+      return audio;
     } catch (error) {
-      console.error('Failed to play ambient sound', error);
+      console.warn('Failed to load ambient sound', error);
+      return null;
     }
   }
 
+  async playAmbient(ambient: AmbientSound, initialVolume = 0.5) {
+    return this.loadAndPlayAmbient(ambient, initialVolume);
+  }
+
   async stopAmbient() {
-    if (this.ambientSound) {
-      try {
-        await this.ambientSound.stopAsync();
-        await this.ambientSound.unloadAsync();
-      } catch (e) {
-        // ignore
-      }
-      this.ambientSound = null;
+    if (this.ambientAudio) {
+      this.ambientAudio.pause();
+      this.ambientAudio.src = '';
+      this.ambientAudio = null;
     }
   }
 
   async setAmbientVolume(volume: number) {
-    if (this.ambientSound) {
-      await this.ambientSound.setVolumeAsync(Math.max(0, Math.min(1, volume)));
+    if (this.ambientAudio) {
+      this.ambientAudio.volume = Math.max(0, Math.min(1, volume));
     }
   }
 
-  async stopAll() {
-    await this.pauseRecitation();
-    await this.stopAmbient();
+  async unloadAll() {
+    if (this.statusInterval) clearInterval(this.statusInterval);
+    if (this.recitationAudio) {
+      this.recitationAudio.pause();
+      this.recitationAudio.src = '';
+      this.recitationAudio = null;
+    }
+    if (this.ambientAudio) {
+      this.ambientAudio.pause();
+      this.ambientAudio.src = '';
+      this.ambientAudio = null;
+    }
   }
 }
 

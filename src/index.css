@@ -1,0 +1,48 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-cairo: 'Cairo', system-ui, -apple-system, sans-serif;
+    --font-quran: 'Amiri Quran', 'Amiri', 'Scheherazade New', serif;
+    --font-amiri: 'Amiri', serif;
+    --font-scheherazade: 'Scheherazade New', serif;
+  }
+
+  body {
+    font-family: var(--font-cairo);
+  }
+}
+
+.font-quran {
+  font-family: var(--font-quran);
+  line-height: 2.2;
+}
+
+.font-amiri {
+  font-family: var(--font-amiri);
+}
+
+.font-scheherazade {
+  font-family: var(--font-scheherazade);
+}
+
+.font-cairo {
+  font-family: var(--font-cairo);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(217, 119, 6, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(217, 119, 6, 0.45);
+}

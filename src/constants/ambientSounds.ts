@@ -6,7 +6,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     title: 'Calm Rain',
     arabicTitle: 'مطر هادئ',
     icon: 'cloud-rain',
-    file: require('../../assets/audio/calm_rain.mp3'),
+    file: '/assets/audio/calm_rain.mp3',
     defaultVolume: 0.5,
   },
   {
@@ -14,7 +14,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     title: 'Bonfire',
     arabicTitle: 'حطب ونار',
     icon: 'flame',
-    file: require('../../assets/audio/calm_bonfire.mp3'),
+    file: '/assets/audio/calm_bonfire.mp3',
     defaultVolume: 0.4,
   },
   {
@@ -22,7 +22,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     title: 'River Stream',
     arabicTitle: 'خرير النهر',
     icon: 'waves',
-    file: require('../../assets/audio/calm_river.mp3'),
+    file: '/assets/audio/calm_river.mp3',
     defaultVolume: 0.5,
   },
   {
@@ -30,7 +30,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     title: 'Morning Birds',
     arabicTitle: 'طيور الصباح',
     icon: 'sun',
-    file: require('../../assets/audio/morning_birds.mp3'),
+    file: '/assets/audio/morning_birds.mp3',
     defaultVolume: 0.35,
   },
   {
@@ -38,7 +38,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     title: 'Light Wind',
     arabicTitle: 'نسيم الرياح',
     icon: 'wind',
-    file: require('../../assets/audio/light_wind.mp3'),
+    file: '/assets/audio/light_wind.mp3',
     defaultVolume: 0.45,
   },
   {
@@ -46,7 +46,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     title: 'Ocean Waves',
     arabicTitle: 'أمواج البحر',
     icon: 'droplet',
-    file: require('../../assets/audio/wave_effect.mp3'),
+    file: '/assets/audio/wave_effect.mp3',
     defaultVolume: 0.5,
   },
   {
@@ -54,7 +54,7 @@ export const AMBIENT_SOUNDS: AmbientSound[] = [
     title: 'Cat Purring',
     arabicTitle: 'خرخرة قطة',
     icon: 'heart',
-    file: require('../../assets/audio/cat_puring.mp3'),
+    file: '/assets/audio/cat_puring.mp3',
     defaultVolume: 0.3,
   },
 ];
