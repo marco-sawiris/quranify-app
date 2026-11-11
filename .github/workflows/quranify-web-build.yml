@@ -1,0 +1,31 @@
+name: Quranify Web Build
+
+on:
+  push:
+    branches: [web-liquid-glass]
+    paths:
+      - "web/**"
+      - "package.json"
+      - "index.html"
+      - "vite.config.ts"
+      - "src/services/quranService.ts"
+      - "assets/data/surah_names_ar.json"
+      - ".github/workflows/quranify-web-build.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "web/**"
+      - "src/services/quranService.ts"
+      - "assets/data/surah_names_ar.json"
+      - ".github/workflows/quranify-web-build.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
