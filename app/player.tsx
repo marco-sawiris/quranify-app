@@ -28,6 +28,7 @@ import { usePlayerStore } from '../src/store/usePlayerStore';
 import { useStatsStore } from '../src/store/useStatsStore';
 import { RECITERS } from '../src/constants/reciters';
 import { AmbientSelectorModal } from '../components/AmbientSelectorModal';
+import { GlassSurface } from '../../components/GlassSurface';
 
 export default function PlayerScreen() {
   const router = useRouter();
@@ -112,7 +113,7 @@ export default function PlayerScreen() {
         </View>
 
         {/* Synchronized Aya Banner */}
-        <View style={styles.ayaBanner}>
+        <GlassSurface style={styles.ayaBanner}>
           <View style={styles.ayaHeader}>
             <Text style={styles.ayaBadge}>الآية {activeAyaNumber}</Text>
             <Text style={styles.ayaTotal}>من {currentSurah.numberOfAyahs}</Text>
@@ -123,7 +124,7 @@ export default function PlayerScreen() {
               ? 'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ'
               : `تلاوة الآية رقم (${activeAyaNumber}) من سورة ${currentSurah.name} بصوت ${currentReciter.arabicName}`}
           </Text>
-        </View>
+        </GlassSurface>
 
         {/* Action Pills (Reciter, Ambient, Tafsir, Timer) */}
         <View style={styles.actionPills}>
