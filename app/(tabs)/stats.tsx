@@ -11,6 +11,7 @@ import { Flame, Clock, Award, Target, Heart, CheckCircle2 } from 'lucide-react-n
 import { useStatsStore } from '../../src/store/useStatsStore';
 import { QuranService } from '../../src/services/quranService';
 import { RECITERS } from '../../src/constants/reciters';
+import { GlassSurface } from '../../components/GlassSurface';
 
 export default function StatsScreen() {
   const {
@@ -47,26 +48,26 @@ export default function StatsScreen() {
         {/* Top Highlight Cards */}
         <View style={styles.metricsRow}>
           {/* Streak Card */}
-          <View style={styles.metricCard}>
+          <GlassSurface style={styles.metricCard}>
             <View style={[styles.metricIconBox, { backgroundColor: 'rgba(245, 158, 11, 0.15)' }]}>
               <Flame size={22} color="#F59E0B" fill="#F59E0B" />
             </View>
             <Text style={styles.metricValue}>{streakDays} أيام</Text>
             <Text style={styles.metricLabel}>أيام متواصلة</Text>
-          </View>
+          </GlassSurface>
 
           {/* Total Hours Card */}
-          <View style={styles.metricCard}>
+          <GlassSurface style={styles.metricCard}>
             <View style={[styles.metricIconBox, { backgroundColor: 'rgba(16, 185, 129, 0.15)' }]}>
               <Award size={22} color="#10B981" />
             </View>
             <Text style={styles.metricValue}>{totalHoursListened} ساعة</Text>
             <Text style={styles.metricLabel}>إجمالي الاستماع</Text>
-          </View>
+          </GlassSurface>
         </View>
 
         {/* Daily Goal Card */}
-        <View style={styles.goalCard}>
+        <GlassSurface style={styles.goalCard}>
           <View style={styles.goalHeader}>
             <View style={styles.goalBadge}>
               <Target size={14} color="#10B981" />
@@ -86,10 +87,10 @@ export default function StatsScreen() {
               ? '🎉 رائع! حققت هدف الاستماع اليومي بالكامل اليوم'
               : `تبقى لك ${dailyGoalMinutes - todayMinutesListened} دقيقة لتحقيق هدف اليوم`}
           </Text>
-        </View>
+        </GlassSurface>
 
         {/* Weekly Activity Chart */}
-        <View style={styles.chartCard}>
+        <GlassSurface style={styles.chartCard}>
           <Text style={styles.chartTitle}>نشاط الأسبوع الحالي</Text>
           <View style={styles.chartBarsRow}>
             {weekDays.map((item, index) => {
@@ -112,10 +113,10 @@ export default function StatsScreen() {
               );
             })}
           </View>
-        </View>
+        </GlassSurface>
 
         {/* Favorites Summary */}
-        <View style={styles.favSection}>
+        <GlassSurface style={styles.favSection}>
           <View style={styles.favSectionHeader}>
             <Heart size={18} color="#EF4444" fill="#EF4444" />
             <Text style={styles.favSectionTitle}>سورك وقراؤك المفضلون</Text>
@@ -132,7 +133,7 @@ export default function StatsScreen() {
               );
             })}
           </View>
-        </View>
+        </GlassSurface>
       </ScrollView>
     </SafeAreaView>
   );

@@ -25,6 +25,7 @@ import { RECITERS } from '../../src/constants/reciters';
 import { AMBIENT_SOUNDS } from '../../src/constants/ambientSounds';
 import { PLAYLISTS } from '../../src/constants/playlists';
 import { AmbientSelectorModal } from '../../components/AmbientSelectorModal';
+import { GlassSurface } from '../../components/GlassSurface';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -54,7 +55,7 @@ export default function HomeScreen() {
         </View>
 
         {/* Daily Verse Card */}
-        <View style={styles.dailyVerseCard}>
+        <GlassSurface style={styles.dailyVerseCard} radius={20} intensity={38}>
           <View style={styles.dailyBadge}>
             <Sparkles size={14} color="#10B981" />
             <Text style={styles.dailyBadgeText}>آية اليوم وتدبر</Text>
@@ -73,7 +74,7 @@ export default function HomeScreen() {
             <Play size={16} color="#0F172A" fill="#0F172A" />
             <Text style={styles.dailyPlayText}>استمع للآية بصوت العفاسي</Text>
           </TouchableOpacity>
-        </View>
+        </GlassSurface>
 
         {/* Ambient Sounds Quick Row */}
         <View style={styles.sectionHeader}>
@@ -289,11 +290,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   dailyVerseCard: {
-    backgroundColor: '#1E293B',
+    backgroundColor: 'rgba(13, 25, 48, 0.38)',
     borderRadius: 20,
     padding: 20,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: 'rgba(160, 205, 255, 0.18)',
     marginBottom: 24,
     alignItems: 'center',
   },

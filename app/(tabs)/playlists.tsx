@@ -12,6 +12,7 @@ import { Play, BookOpen, Clock, ListMusic } from 'lucide-react-native';
 import { PLAYLISTS, AUDIO_STORIES } from '../../src/constants/playlists';
 import { QuranService } from '../../src/services/quranService';
 import { usePlayerStore } from '../../src/store/usePlayerStore';
+import { GlassSurface } from '../../components/GlassSurface';
 
 export default function PlaylistsScreen() {
   const [activeTab, setActiveTab] = useState<'playlists' | 'stories'>('playlists');
@@ -102,7 +103,7 @@ export default function PlaylistsScreen() {
         ) : (
           <View style={styles.storiesContainer}>
             {AUDIO_STORIES.map((story) => (
-              <View key={story.id} style={styles.storyCard}>
+              <GlassSurface key={story.id} style={styles.storyCard}>
                 <Image source={{ uri: story.image }} style={styles.storyImage} />
                 <View style={styles.storyInfo}>
                   <View style={styles.storyCategoryBadge}>
@@ -126,7 +127,7 @@ export default function PlaylistsScreen() {
                     </TouchableOpacity>
                   </View>
                 </View>
-              </View>
+              </GlassSurface>
             ))}
           </View>
         )}

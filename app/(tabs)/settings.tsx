@@ -24,6 +24,7 @@ import {
   RotateCcw,
 } from 'lucide-react-native';
 import { useAppStore } from '../../src/store/useAppStore';
+import { GlassSurface } from '../../components/GlassSurface';
 
 export default function SettingsScreen() {
   const router = useRouter();
@@ -63,7 +64,7 @@ export default function SettingsScreen() {
 
         {/* Section: Downloads & Storage */}
         <Text style={styles.sectionHeader}>التنزيلات والذاكرة</Text>
-        <View style={styles.card}>
+        <GlassSurface style={styles.card}>
           <View style={styles.row}>
             <View style={styles.rowLeft}>
               <Text style={styles.storageValue}>1.4 GB مستخدمة</Text>
@@ -115,11 +116,11 @@ export default function SettingsScreen() {
               </View>
             </View>
           </TouchableOpacity>
-        </View>
+        </GlassSurface>
 
         {/* Section: Audio & Playback Preferences */}
         <Text style={styles.sectionHeader}>تفضيلات الصوت والتلاوة</Text>
-        <View style={styles.card}>
+        <GlassSurface style={styles.card}>
           <View style={styles.row}>
             <Switch
               value={highQualityAudio}
@@ -137,11 +138,11 @@ export default function SettingsScreen() {
               </View>
             </View>
           </View>
-        </View>
+        </GlassSurface>
 
         {/* Section: Notifications */}
         <Text style={styles.sectionHeader}>التنبيهات والإشعارات</Text>
-        <View style={styles.card}>
+        <GlassSurface style={styles.card}>
           <View style={styles.row}>
             <Switch
               value={notificationsEnabled}
@@ -159,11 +160,11 @@ export default function SettingsScreen() {
               </View>
             </View>
           </View>
-        </View>
+        </GlassSurface>
 
         {/* Section: Account & Info */}
         <Text style={styles.sectionHeader}>الحساب والتطبيق</Text>
-        <View style={styles.card}>
+        <GlassSurface style={styles.card}>
           <View style={styles.row}>
             <View style={styles.rowRight}>
               <View style={styles.iconBox}>
@@ -205,7 +206,7 @@ export default function SettingsScreen() {
               </View>
             </View>
           </TouchableOpacity>
-        </View>
+        </GlassSurface>
       </ScrollView>
     </SafeAreaView>
   );

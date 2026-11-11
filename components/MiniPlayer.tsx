@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Pressable } from 'react-nativ
 import { useRouter } from 'expo-router';
 import { Play, Pause, Disc, CloudRain } from 'lucide-react-native';
 import { usePlayerStore } from '../src/store/usePlayerStore';
+import { BlurView } from 'expo-blur';
+import { Platform } from 'react-native';
 
 export const MiniPlayer: React.FC = () => {
   const router = useRouter();
@@ -23,6 +25,7 @@ export const MiniPlayer: React.FC = () => {
       onPress={() => router.push('/player')}
       style={styles.container}
     >
+      {Platform.OS === 'android' && <BlurView tint="dark" intensity={48} experimentalBlurMethod="dimezisBlurView" style={StyleSheet.absoluteFillObject} />}
       {/* Progress line */}
       <View style={styles.progressBarBackground}>
         <View style={[styles.progressBarFill, { width: `${progress * 100}%` }]} />
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
     bottom: 56, // Above standard tab bar
     left: 12,
     right: 12,
-    backgroundColor: '#1E293B',
+    backgroundColor: Platform.select({ android: 'rgba(13, 25, 48, 0.42)', default: '#1E293B' }),
     borderRadius: 16,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -87,7 +90,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: Platform.select({ android: 'rgba(160, 205, 255, 0.2)', default: '#334155' }),
   },
   progressBarBackground: {
     height: 3,
