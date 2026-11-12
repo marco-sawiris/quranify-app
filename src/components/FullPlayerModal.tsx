@@ -8,12 +8,10 @@ import {
   RotateCcw,
   RotateCw,
   Volume2,
-  VolumeX,
   Disc,
   CloudRain,
   Clock,
   BookOpen,
-  Sparkles,
 } from 'lucide-react';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { RECITERS } from '../constants/reciters';
@@ -50,7 +48,6 @@ export const FullPlayerModal: React.FC<Props> = ({
     recitationVolume,
     ambientVolume,
     activeAmbient,
-    isAmbientPlaying,
     sleepTimerMinutes,
     togglePlayPause,
     seekTo,
@@ -76,94 +73,109 @@ export const FullPlayerModal: React.FC<Props> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-2xl animate-fade-in font-cairo"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-xl max-h-[95vh] overflow-y-auto bg-stone-900 border border-stone-800 rounded-3xl p-6 sm:p-8 shadow-2xl text-stone-100 relative flex flex-col"
+        className="w-full max-w-xl max-h-[95vh] overflow-y-auto glass-strong rounded-3xl p-6 sm:p-8 text-[var(--text)] relative flex flex-col border-[var(--glass-border-2)] shadow-[0_20px_60px_rgba(3,7,17,0.9)]"
         onClick={(e) => e.stopPropagation()}
         dir="rtl"
       >
+        {/* Top subtle reflection line */}
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)]/50 to-transparent pointer-events-none" />
+
         {/* Header Bar */}
-        <div className="flex items-center justify-between pb-4 border-b border-stone-800">
+        <div className="flex items-center justify-between pb-4 border-b border-[var(--glass-border)]">
           <div className="flex items-center gap-2">
-            <span className="text-xs uppercase tracking-widest text-amber-500 font-sans">
+            <span className="text-xs uppercase tracking-widest text-[var(--accent)] font-sans font-bold">
               المشغل الذكي
             </span>
-            <span className="text-stone-500">·</span>
-            <span className="text-xs text-stone-400">سورة {currentSurah.name}</span>
+            <span className="opacity-30">·</span>
+            <span className="text-xs text-[var(--text-secondary)]">سورة {currentSurah.name}</span>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={onOpenMushaf}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-400 border border-stone-700 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-[var(--glass-bg-3)] hover:bg-[var(--glass-bg-2)] text-[var(--accent)] border border-[var(--glass-border-2)] shadow-sm transition-all"
             >
               <BookOpen className="w-3.5 h-3.5" />
               <span>قراءة السورة</span>
             </button>
             <button
               onClick={onClose}
-              className="p-2 text-stone-400 hover:text-stone-100 hover:bg-stone-800 rounded-xl transition-colors"
+              className="p-2 text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-white/[0.06] rounded-xl transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
         </div>
 
-        {/* Central Spinning Vinyl Art */}
+        {/* Central Spinning Vinyl Art with Cyan & Royal Blue Glow */}
         <div className="my-8 flex flex-col items-center justify-center">
           <div className="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center">
-            {/* Outer golden aura glow */}
+            {/* Outer aura glow */}
             <div
-              className={`absolute inset-0 rounded-full bg-gradient-to-tr from-amber-500/20 via-emerald-500/10 to-amber-500/30 blur-2xl transition-opacity duration-1000 ${
-                isPlaying ? 'opacity-100 scale-105' : 'opacity-40'
+              className={`absolute inset-0 rounded-full bg-gradient-to-tr from-[var(--royal)]/30 via-[var(--primary)]/20 to-[var(--accent)]/35 blur-3xl transition-opacity duration-1000 ${
+                isPlaying ? 'opacity-100 scale-110' : 'opacity-30'
               }`}
             />
 
             {/* Spinning disc */}
             <div
-              className={`w-full h-full rounded-full border-4 border-stone-800 bg-stone-950 shadow-2xl flex items-center justify-center relative overflow-hidden ${
-                isPlaying ? 'animate-spin' : ''
+              className={`w-full h-full rounded-full border border-[var(--glass-border-2)] bg-[var(--bg-el)] shadow-2xl flex items-center justify-center relative overflow-hidden ${
+                isPlaying ? 'animate-spin-slow' : ''
               }`}
-              style={{ animationDuration: '20s' }}
             >
               {/* Vinyl concentric groove rings */}
-              <div className="absolute inset-4 rounded-full border border-stone-800/60" />
-              <div className="absolute inset-8 rounded-full border border-stone-800/40" />
-              <div className="absolute inset-14 rounded-full border border-stone-800/30" />
+              <div className="absolute inset-4 rounded-full border border-white/[0.06]" />
+              <div className="absolute inset-8 rounded-full border border-white/[0.04]" />
+              <div className="absolute inset-14 rounded-full border border-white/[0.03]" />
 
               {/* Center Medallion */}
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 border-2 border-amber-400/80 flex flex-col items-center justify-center shadow-lg text-center p-2 z-10">
-                <Disc className="w-6 h-6 text-amber-200" />
-                <span className="font-quran text-base text-amber-100 font-bold mt-1">
+              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[var(--navy)] via-[var(--bg)] to-[var(--midnight)] border-2 border-[var(--accent)]/70 flex flex-col items-center justify-center shadow-[0_0_20px_rgba(32,199,232,0.35)] text-center p-2 z-10">
+                <Disc className="w-6 h-6 text-[var(--accent)]" />
+                <span className="font-quran text-base text-[var(--text)] font-bold mt-1">
                   {currentSurah.name}
                 </span>
               </div>
             </div>
           </div>
 
+          {/* 7 Animated Waveform Bars in Full Player */}
+          {isPlaying && (
+            <div className="mt-5 flex items-center audio-bars-container">
+              <div className="audio-bar" />
+              <div className="audio-bar" />
+              <div className="audio-bar" />
+              <div className="audio-bar" />
+              <div className="audio-bar" />
+              <div className="audio-bar" />
+              <div className="audio-bar" />
+            </div>
+          )}
+
           {/* Surah Title & Reciter Switcher */}
-          <div className="text-center mt-6">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-100 font-cairo">
+          <div className="text-center mt-5">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--text)] font-cairo">
               سورة {currentSurah.name}
             </h1>
-            <p className="text-xs text-stone-400 mt-1">
+            <p className="text-xs text-[var(--text-secondary)] mt-1">
               {currentSurah.englishName} · {currentSurah.revelationType} · {currentSurah.numberOfAyahs} آية
             </p>
 
             <button
               onClick={() => setShowReciterPicker(!showReciterPicker)}
-              className="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-stone-800/80 hover:bg-stone-800 border border-stone-700 text-xs text-amber-400 font-medium transition-colors"
+              className="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--glass-bg-3)] hover:bg-[var(--glass-bg-2)] border border-[var(--glass-border)] text-xs text-[var(--accent)] font-medium transition-colors shadow-sm"
             >
               <span>القارئ: {currentReciter.arabicName}</span>
-              <span className="text-stone-500">▼</span>
+              <span className="text-[var(--text-muted)] text-[10px]">▼</span>
             </button>
           </div>
 
           {/* Reciter dropdown list */}
           {showReciterPicker && (
-            <div className="w-full mt-3 p-2 bg-stone-800 border border-stone-700 rounded-2xl max-h-48 overflow-y-auto space-y-1">
+            <div className="w-full mt-3 p-2 bg-[var(--bg-el)]/95 backdrop-blur-2xl border border-[var(--glass-border-2)] rounded-2xl max-h-48 overflow-y-auto space-y-1 shadow-2xl">
               {RECITERS.map((r: Reciter) => (
                 <button
                   key={r.id}
@@ -173,12 +185,12 @@ export const FullPlayerModal: React.FC<Props> = ({
                   }}
                   className={`w-full text-right px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-colors ${
                     r.id === currentReciter.id
-                      ? 'bg-amber-500/20 text-amber-400 font-bold'
-                      : 'text-stone-300 hover:bg-stone-700/60'
+                      ? 'bg-[var(--glass-bg-3)] text-[var(--accent)] font-bold border border-[var(--glass-border)]'
+                      : 'text-[var(--text-secondary)] hover:bg-white/[0.05] hover:text-[var(--text)]'
                   }`}
                 >
                   <span>{r.arabicName}</span>
-                  <span className="text-[10px] text-stone-400 font-sans">{r.subname}</span>
+                  <span className="text-[10px] text-[var(--text-muted)] font-sans">{r.subname}</span>
                 </button>
               ))}
             </div>
@@ -194,9 +206,9 @@ export const FullPlayerModal: React.FC<Props> = ({
             step="0.001"
             value={progress}
             onChange={handleSeek}
-            className="w-full h-2 bg-stone-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+            className="w-full h-2 bg-white/[0.08] rounded-lg appearance-none cursor-pointer accent-[var(--accent)]"
           />
-          <div className="flex items-center justify-between text-xs font-mono text-stone-400">
+          <div className="flex items-center justify-between text-xs font-mono text-[var(--text-secondary)]">
             <span>{formatTime(position)}</span>
             <span>{isBuffering ? 'جاري التحميل...' : formatTime(duration)}</span>
           </div>
@@ -206,7 +218,7 @@ export const FullPlayerModal: React.FC<Props> = ({
         <div className="flex items-center justify-center gap-4 sm:gap-6 my-4">
           <button
             onClick={prevSurah}
-            className="p-3 text-stone-400 hover:text-stone-100 hover:bg-stone-800 rounded-2xl transition-colors"
+            className="p-3 text-[var(--text-secondary)] hover:text-[var(--text)] hover:bg-white/[0.06] rounded-2xl transition-colors"
             title="السورة السابقة"
           >
             <SkipForward className="w-5 h-5" />
@@ -214,7 +226,7 @@ export const FullPlayerModal: React.FC<Props> = ({
 
           <button
             onClick={() => seekTo(Math.max(0, position - 10000))}
-            className="p-3 text-stone-400 hover:text-stone-100 hover:bg-stone-800 rounded-2xl transition-colors"
+            className="p-3 text-[var(--text-secondary)] hover:text-[var(--text)] hover:bg-white/[0.06] rounded-2xl transition-colors"
             title="إرجاع 10 ثوانٍ"
           >
             <RotateCcw className="w-5 h-5" />
@@ -223,18 +235,18 @@ export const FullPlayerModal: React.FC<Props> = ({
           <button
             onClick={togglePlayPause}
             disabled={isBuffering}
-            className="w-16 h-16 rounded-3xl bg-amber-500 hover:bg-amber-400 text-stone-950 flex items-center justify-center shadow-lg shadow-amber-500/20 transition-all hover:scale-105 active:scale-95"
+            className="w-16 h-16 rounded-3xl btn--primary flex items-center justify-center shadow-lg transition-all hover:scale-105 active:scale-95"
           >
             {isPlaying ? (
-              <Pause className="w-7 h-7 fill-current" />
+              <Pause className="w-7 h-7 fill-current text-white" />
             ) : (
-              <Play className="w-7 h-7 fill-current ml-0.5" />
+              <Play className="w-7 h-7 fill-current ml-0.5 text-white" />
             )}
           </button>
 
           <button
             onClick={() => seekTo(Math.min(duration, position + 10000))}
-            className="p-3 text-stone-400 hover:text-stone-100 hover:bg-stone-800 rounded-2xl transition-colors"
+            className="p-3 text-[var(--text-secondary)] hover:text-[var(--text)] hover:bg-white/[0.06] rounded-2xl transition-colors"
             title="تقديم 10 ثوانٍ"
           >
             <RotateCw className="w-5 h-5" />
@@ -242,7 +254,7 @@ export const FullPlayerModal: React.FC<Props> = ({
 
           <button
             onClick={nextSurah}
-            className="p-3 text-stone-400 hover:text-stone-100 hover:bg-stone-800 rounded-2xl transition-colors"
+            className="p-3 text-[var(--text-secondary)] hover:text-[var(--text)] hover:bg-white/[0.06] rounded-2xl transition-colors"
             title="السورة التالية"
           >
             <SkipBack className="w-5 h-5" />
@@ -250,15 +262,15 @@ export const FullPlayerModal: React.FC<Props> = ({
         </div>
 
         {/* Dual-Audio Engine Sliders */}
-        <div className="mt-4 pt-4 border-t border-stone-800 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="mt-4 pt-4 border-t border-[var(--glass-border)] grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Reciter Volume */}
-          <div className="p-3 bg-stone-800/40 border border-stone-800 rounded-2xl">
-            <div className="flex items-center justify-between text-xs mb-1.5 text-stone-300">
-              <span className="flex items-center gap-1.5">
-                <Volume2 className="w-4 h-4 text-amber-400" />
+          <div className="p-3.5 bg-white/[0.02] border border-[var(--glass-border)] rounded-2xl">
+            <div className="flex items-center justify-between text-xs mb-2 text-[var(--text)]">
+              <span className="flex items-center gap-1.5 font-medium">
+                <Volume2 className="w-4 h-4 text-[var(--accent)]" />
                 صوت التلاوة
               </span>
-              <span className="font-mono text-amber-400">{Math.round(recitationVolume * 100)}%</span>
+              <span className="font-mono text-[var(--accent)] font-bold">{Math.round(recitationVolume * 100)}%</span>
             </div>
             <input
               type="range"
@@ -267,23 +279,23 @@ export const FullPlayerModal: React.FC<Props> = ({
               step="0.05"
               value={recitationVolume}
               onChange={(e) => setRecitationVolume(parseFloat(e.target.value))}
-              className="w-full h-1.5 bg-stone-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
+              className="w-full h-1.5 bg-white/[0.08] rounded-lg appearance-none cursor-pointer accent-[var(--accent)]"
             />
           </div>
 
           {/* Ambient Volume & Trigger */}
-          <div className="p-3 bg-stone-800/40 border border-stone-800 rounded-2xl">
-            <div className="flex items-center justify-between text-xs mb-1.5 text-stone-300">
+          <div className="p-3.5 bg-white/[0.02] border border-[var(--glass-border)] rounded-2xl">
+            <div className="flex items-center justify-between text-xs mb-2 text-[var(--text)]">
               <button
                 onClick={onOpenAmbientModal}
-                className="flex items-center gap-1.5 hover:text-sky-400 transition-colors"
+                className="flex items-center gap-1.5 hover:text-[var(--accent)] transition-colors font-medium"
               >
-                <CloudRain className="w-4 h-4 text-sky-400" />
+                <CloudRain className="w-4 h-4 text-[var(--accent)]" />
                 <span>أصوات الطبيعة {activeAmbient ? `(${activeAmbient.arabicTitle})` : ''}</span>
               </button>
               <button
                 onClick={onOpenAmbientModal}
-                className="text-[10px] text-amber-400 hover:underline"
+                className="text-[10px] text-[var(--accent)] hover:underline"
               >
                 تغيير
               </button>
@@ -295,20 +307,20 @@ export const FullPlayerModal: React.FC<Props> = ({
               step="0.05"
               value={ambientVolume}
               onChange={(e) => setAmbientVolume(parseFloat(e.target.value))}
-              className="w-full h-1.5 bg-stone-700 rounded-lg appearance-none cursor-pointer accent-sky-400"
+              className="w-full h-1.5 bg-white/[0.08] rounded-lg appearance-none cursor-pointer accent-[var(--accent)]"
             />
           </div>
         </div>
 
         {/* Bottom Utility Tools (Sleep Timer) */}
-        <div className="flex items-center justify-between mt-4 pt-3 border-t border-stone-800 text-xs">
+        <div className="flex items-center justify-between mt-4 pt-3 border-t border-[var(--glass-border)] text-xs">
           <div className="relative">
             <button
               onClick={() => setShowSleepTimerMenu(!showSleepTimerMenu)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border transition-colors ${
                 sleepTimerMinutes
-                  ? 'bg-amber-500/20 border-amber-500 text-amber-400'
-                  : 'bg-stone-800/60 border-stone-700 text-stone-400 hover:text-stone-200'
+                  ? 'bg-[var(--glass-bg-3)] border-[var(--accent)] text-[var(--accent)]'
+                  : 'bg-white/[0.03] border-[var(--glass-border)] text-[var(--text-secondary)] hover:text-[var(--text)]'
               }`}
             >
               <Clock className="w-3.5 h-3.5" />
@@ -318,7 +330,7 @@ export const FullPlayerModal: React.FC<Props> = ({
             </button>
 
             {showSleepTimerMenu && (
-              <div className="absolute bottom-10 right-0 p-2 bg-stone-850 bg-stone-800 border border-stone-700 rounded-xl shadow-xl flex flex-col gap-1 z-20 w-36">
+              <div className="absolute bottom-10 right-0 p-2 bg-[var(--bg-el)] border border-[var(--glass-border-2)] rounded-xl shadow-2xl flex flex-col gap-1 z-30 w-36">
                 {[15, 30, 45, 60].map((mins) => (
                   <button
                     key={mins}
@@ -326,7 +338,7 @@ export const FullPlayerModal: React.FC<Props> = ({
                       setSleepTimer(mins);
                       setShowSleepTimerMenu(false);
                     }}
-                    className="px-3 py-1.5 text-right text-xs hover:bg-stone-700 rounded-lg text-stone-200"
+                    className="px-3 py-1.5 text-right text-xs hover:bg-white/[0.06] rounded-lg text-[var(--text)]"
                   >
                     {mins} دقيقة
                   </button>
@@ -348,7 +360,7 @@ export const FullPlayerModal: React.FC<Props> = ({
 
           <button
             onClick={onClose}
-            className="text-stone-400 hover:text-stone-200"
+            className="text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors"
           >
             تصغير المشغل ↓
           </button>
